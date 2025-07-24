@@ -1,0 +1,181 @@
+/* Estilos CSS modulares para el componente LandingGenerator */
+
+/* Contenedor principal que ocupa toda la pantalla con fondo degradado */
+.container {
+  min-height: 100vh; /* Altura mínima del viewport completo */
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 100%
+  ); /* Fondo degradado azul-púrpura */
+  padding: 2rem; /* Espaciado interno */
+  display: flex; /* Layout flexbox */
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+}
+
+/* Contenedor interno con fondo blanco y sombra */
+.wrapper {
+  max-width: 800px; /* Ancho máximo del contenedor */
+  width: 100%; /* Ancho completo hasta el máximo */
+  background: white; /* Fondo blanco */
+  border-radius: 12px; /* Bordes redondeados */
+  padding: 2rem; /* Espaciado interno */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Título principal de la aplicación */
+.title {
+  text-align: center; /* Centrar texto */
+  color: #333; /* Color gris oscuro */
+  margin-bottom: 2rem; /* Margen inferior */
+  font-size: 2.5rem; /* Tamaño de fuente grande */
+  font-weight: 700; /* Peso de fuente bold */
+}
+
+/* Sección del formulario */
+.formSection {
+  margin-bottom: 2rem; /* Margen inferior */
+}
+
+/* Etiqueta del campo de texto */
+.label {
+  display: block; /* Mostrar como bloque */
+  margin-bottom: 0.5rem; /* Margen inferior pequeño */
+  color: #555; /* Color gris medio */
+  font-weight: 600; /* Peso de fuente semi-bold */
+  font-size: 1.1rem; /* Tamaño de fuente ligeramente mayor */
+}
+
+/* Campo de texto (textarea) para el prompt */
+.textarea {
+  width: 100%; /* Ancho completo */
+  padding: 1rem; /* Espaciado interno */
+  border: 2px solid #e1e5e9; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 1rem; /* Tamaño de fuente normal */
+  font-family: inherit; /* Heredar fuente del padre */
+  resize: vertical; /* Permitir redimensionar solo verticalmente */
+  transition: border-color 0.3s ease; /* Transición suave del color del borde */
+}
+
+/* Estado de foco del textarea */
+.textarea:focus {
+  outline: none; /* Eliminar outline por defecto */
+  border-color: #667eea; /* Cambiar color del borde al azul del tema */
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); /* Sombra de foco suave */
+}
+
+/* Botón de generar landing page */
+.generateButton {
+  width: 100%; /* Ancho completo */
+  padding: 1rem 2rem; /* Espaciado interno */
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 100%
+  ); /* Fondo degradado */
+  color: white; /* Texto blanco */
+  border: none; /* Sin borde */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 1.1rem; /* Tamaño de fuente ligeramente mayor */
+  font-weight: 600; /* Peso de fuente semi-bold */
+  cursor: pointer; /* Cursor de puntero */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transiciones suaves */
+}
+
+/* Estado hover del botón (solo si no está deshabilitado) */
+.generateButton:hover:not(:disabled) {
+  transform: translateY(-2px); /* Elevar ligeramente */
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); /* Sombra más pronunciada */
+}
+
+/* Estado deshabilitado del botón */
+.generateButton:disabled {
+  background: linear-gradient(135deg, #ccc, #999); /* Fondo gris */
+  cursor: not-allowed; /* Cursor de no permitido */
+  transform: none; /* Sin transformación */
+}
+
+/* Hover del botón deshabilitado (sin efecto) */
+.generateButton:disabled:hover {
+  transform: none; /* Sin transformación en hover */
+}
+
+/* Sección de resultados que aparece después de generar */
+.resultSection {
+  margin-top: 2rem; /* Margen superior */
+  width: 100%; /* Ancho completo */
+}
+
+/* Título de la sección de resultados */
+.resultTitle {
+  font-size: 1.5rem; /* Tamaño de fuente mediano */
+  color: #333; /* Color gris oscuro */
+  margin-bottom: 1rem; /* Margen inferior */
+  text-align: center; /* Centrar texto */
+}
+
+/* Contenedor de la vista previa en iframe */
+.previewContainer {
+  margin-bottom: 2rem; /* Margen inferior */
+  border: 2px solid #e0e0e0; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden; /* Ocultar contenido que se desborde */
+}
+
+/* Iframe para mostrar la vista previa de la landing page */
+.preview {
+  width: 100%; /* Ancho completo */
+  height: 500px; /* Altura fija */
+  border: none; /* Sin borde */
+  background: white; /* Fondo blanco */
+}
+
+/* Sección que contiene el código HTML */
+.codeSection {
+  margin-top: 1rem; /* Margen superior */
+}
+
+/* Título de la sección de código */
+.codeTitle {
+  font-size: 1.2rem; /* Tamaño de fuente mediano */
+  color: #333; /* Color gris oscuro */
+  margin-bottom: 0.5rem; /* Margen inferior pequeño */
+}
+
+/* Bloque de código preformateado */
+.codeBlock {
+  background: #f8f9fa; /* Fondo gris muy claro */
+  border: 1px solid #e9ecef; /* Borde gris claro */
+  border-radius: 6px; /* Bordes redondeados pequeños */
+  padding: 1rem; /* Espaciado interno */
+  overflow-x: auto; /* Scroll horizontal si es necesario */
+  max-height: 300px; /* Altura máxima */
+  overflow-y: auto; /* Scroll vertical si es necesario */
+  font-family: "Courier New", monospace; /* Fuente monoespaciada */
+  font-size: 0.9rem; /* Tamaño de fuente pequeño */
+  line-height: 1.4; /* Altura de línea */
+  white-space: pre-wrap; /* Preservar espacios y saltos de línea */
+  word-wrap: break-word; /* Romper palabras largas */
+}
+
+/* Elemento code dentro del bloque de código */
+.codeBlock code {
+  color: #333; /* Color gris oscuro */
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem; /* Reducir padding en móviles */
+  }
+
+  .wrapper {
+    padding: 1.5rem; /* Reducir padding interno en móviles */
+  }
+
+  .title {
+    font-size: 2rem; /* Reducir tamaño del título en móviles */
+  }
+}

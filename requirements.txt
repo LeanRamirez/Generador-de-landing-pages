@@ -1,0 +1,16 @@
+# Dependencias de Python para el backend del generador de landing pages
+
+# Framework web principal para crear la API REST
+fastapi==0.104.1
+
+# Servidor ASGI para ejecutar aplicaciones FastAPI en producción y desarrollo
+uvicorn==0.24.0
+
+# Biblioteca para cargar variables de entorno desde archivos .env
+python-dotenv==1.0.0
+
+# Cliente oficial de OpenAI para interactuar con la API de GPT
+openai==1.35.0
+
+# Biblioteca de validación de datos y serialización para Python
+pydantic==2.7.0

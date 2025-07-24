@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- Configuración básica del documento HTML -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test - Generador de Landing Pages</title>
+
+    <!-- Bibliotecas externas cargadas desde CDN para pruebas sin configuración -->
+    <!-- React: Biblioteca principal para crear interfaces de usuario -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <!-- ReactDOM: Biblioteca para renderizar componentes React en el DOM -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel: Transpilador para convertir JSX a JavaScript en el navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Axios: Cliente HTTP para realizar peticiones a la API -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      .container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          sans-serif;
+      }
+
+      .wrapper {
+        max-width: 800px;
+        width: 100%;
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .formSection {
+        margin-bottom: 2rem;
+      }
+
+      .label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: inherit;
+        resize: vertical;
+        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .generateButton {
+        width: 100%;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .generateButton:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .generateButton:disabled {
+        background: linear-gradient(135deg, #ccc, #999);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .resultSection {
+        margin-top: 2rem;
+        width: 100%;
+      }
+
+      .resultTitle {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .previewContainer {
+        margin-bottom: 2rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .preview {
+        width: 100%;
+        height: 500px;
+        border: none;
+        background: white;
+      }
+
+      .codeSection {
+        margin-top: 1rem;
+      }
+
+      .codeTitle {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .codeBlock {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        padding: 1rem;
+        overflow-x: auto;
+        max-height: 300px;
+        overflow-y: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .errorMessage {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 6px;
+        margin-top: 1rem;
+        border: 1px solid #f5c6cb;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+        .wrapper {
+          padding: 1.5rem;
+        }
+        .title {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Script principal con código React/JSX transpilado por Babel -->
+    <script type="text/babel">
+      // Extraer el hook useState de React para manejar estado local
+      const { useState } = React;
+
+      // Componente principal LandingGenerator (versión standalone para pruebas)
+      const LandingGenerator = () => {
+        // Estados del componente usando hooks de React
+        const [prompt, setPrompt] = useState(""); // Estado para el texto del prompt del usuario
+        const [generatedHTML, setGeneratedHTML] = useState(""); // Estado para el HTML generado por la IA
+        const [isLoading, setIsLoading] = useState(false); // Estado para controlar el indicador de carga
+        const [error, setError] = useState(""); // Estado para manejar mensajes de error
+
+        // Función asíncrona que maneja la generación de la landing page
+        const handleGenerate = async () => {
+          setIsLoading(true); // Activar indicador de carga
+          setError(""); // Limpiar errores previos
+          try {
+            // Log para debugging - mostrar el prompt que se está enviando
+            console.log("Generando landing page con prompt:", prompt);
+
+            // Realizar petición POST al backend usando axios
+            const response = await axios.post(
+              "http://localhost:8000/generate-landing", // URL del endpoint del backend
+              {
+                prompt: prompt, // Datos a enviar: el prompt del usuario
+              }
+            );
+
+            // Actualizar el estado con el HTML generado recibido del backend
+            setGeneratedHTML(response.data.html);
+            console.log("Landing page generada exitosamente"); // Log de éxito
+          } catch (error) {
+            // Manejo detallado de errores durante la petición
+            console.error("Error al generar landing page:", error);
+            let errorMessage = "Error desconocido"; // Mensaje por defecto
+
+            if (error.response) {
+              // Error con respuesta del servidor (4xx, 5xx)
+              console.error("Respuesta del servidor:", error.response.data);
+              errorMessage = error.response.data.detail || "Error del servidor";
+            } else if (error.request) {
+              // Error de conexión (servidor no responde)
+              errorMessage =
+                "No se pudo conectar con el servidor. Asegúrate de que esté ejecutándose en http://localhost:8000";
+            } else {
+              // Otros tipos de errores
+              errorMessage = error.message;
+            }
+
+            // Actualizar estado con el mensaje de error
+            setError(errorMessage);
+          } finally {
+            // Siempre ejecutar al final, sin importar si hubo éxito o error
+            setIsLoading(false); // Desactivar indicador de carga
+          }
+        };
+
+        // Renderizado del componente JSX
+        return (
+          <div className="container">
+            {/* Contenedor principal con estilos CSS */}
+            <div className="wrapper">
+              {/* Título principal de la aplicación */}
+              <h1 className="title">Generador de Landing Pages</h1>
+
+              {/* Sección del formulario para ingresar el prompt */}
+              <div className="formSection">
+                <label htmlFor="prompt" className="label">
+                  Describe tu landing page:
+                </label>
+                {/* Textarea para que el usuario ingrese la descripción */}
+                <textarea
+                  id="prompt" // ID para asociar con el label
+                  value={prompt} // Valor controlado por el estado
+                  onChange={(e) => setPrompt(e.target.value)} // Actualizar estado cuando cambia el texto
+                  placeholder="Ejemplo: Una landing page para una empresa de marketing digital con colores azules, sección hero, servicios y contacto..." // Texto de ayuda
+                  className="textarea" // Clase CSS para estilos
+                  rows={6} // Número de filas visibles del textarea
+                />
+              </div>
+
+              {/* Botón para generar la landing page */}
+              <button
+                onClick={handleGenerate} // Función a ejecutar al hacer clic
+                className="generateButton" // Clase CSS del botón
+                disabled={!prompt.trim() || isLoading} // Deshabilitar si no hay texto o está cargando
+              >
+                {/* Texto dinámico del botón basado en el estado de carga */}
+                {isLoading ? "Generando..." : "Generar"}
+              </button>
+
+              {/* Mostrar mensaje de error si existe */}
+              {error && (
+                <div className="errorMessage">
+                  <strong>Error:</strong> {error}
+                </div>
+              )}
+
+              {/* Sección de resultados - solo se muestra si hay HTML generado */}
+              {generatedHTML && (
+                <div className="resultSection">
+                  <h2 className="resultTitle">Landing Page Generada:</h2>
+
+                  {/* Contenedor para la vista previa en iframe */}
+                  <div className="previewContainer">
+                    <iframe
+                      srcDoc={generatedHTML} // Contenido HTML a mostrar en el iframe
+                      className="preview" // Clase CSS del iframe
+                      title="Vista previa de la landing page" // Título para accesibilidad
+                    />
+                  </div>
+
+                  {/* Sección para mostrar el código HTML generado */}
+                  <div className="codeSection">
+                    <h3 className="codeTitle">Código HTML:</h3>
+                    {/* Bloque de código preformateado */}
+                    <pre className="codeBlock">
+                      <code>{generatedHTML}</code>{" "}
+                      {/* Mostrar el HTML como texto */}
+                    </pre>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      // Renderizar el componente en el elemento con id "root"
+      ReactDOM.render(<LandingGenerator />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
