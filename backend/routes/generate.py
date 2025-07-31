@@ -6,9 +6,9 @@ de landing pages usando inteligencia artificial.
 """
 
 from fastapi import APIRouter
-from ..schemas.prompt_schema import PromptRequest
-from ..services.generate_code import generar_landing, validate_generation_request
-from ..utils.error_handlers import handle_generic_error, create_success_response
+from schemas.prompt_schema import PromptRequest
+from services.generate_code import generar_landing, validate_generation_request
+from utils.error_handlers import handle_generic_error, create_success_response
 
 
 # Crear router para las rutas de generación

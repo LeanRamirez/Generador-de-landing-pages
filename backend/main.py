@@ -36,5 +36,5 @@ def read_root():
 # Punto de entrada principal cuando se ejecuta el archivo directamente
 if __name__ == "__main__":
     import uvicorn  # Servidor ASGI para ejecutar aplicaciones FastAPI
-    # Ejecutar la aplicación en todas las interfaces (0.0.0.0) en el puerto 8000
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Ejecutar la aplicación en todas las interfaces (0.0.0.0) en el puerto 8001
+    uvicorn.run(app, host="0.0.0.0", port=8001)

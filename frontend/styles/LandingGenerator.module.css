@@ -106,14 +106,65 @@
 .resultSection {
   margin-top: 2rem; /* Margen superior */
   width: 100%; /* Ancho completo */
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header de la sección de resultados con título y botones */
+.resultHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 /* Título de la sección de resultados */
 .resultTitle {
   font-size: 1.5rem; /* Tamaño de fuente mediano */
   color: #333; /* Color gris oscuro */
-  margin-bottom: 1rem; /* Margen inferior */
-  text-align: center; /* Centrar texto */
+  margin: 0; /* Sin margen */
+  font-weight: 600;
+}
+
+/* Contenedor de botones de toggle */
+.viewToggle {
+  display: flex;
+  gap: 0.5rem;
+  background: #f8f9fa;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+/* Botones de toggle entre vista previa y código */
+.toggleButton {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: #6c757d;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toggleButton:hover {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+.toggleButton.active {
+  background: #007bff;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
 }
 
 /* Contenedor de la vista previa en iframe */
@@ -177,5 +228,37 @@
 
   .title {
     font-size: 2rem; /* Reducir tamaño del título en móviles */
+  }
+
+  .textarea {
+    font-size: 1rem;
+  }
+
+  .generateButton {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .resultHeader {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .viewToggle {
+    justify-content: center;
+  }
+
+  .toggleButton {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .preview {
+    height: 300px;
+  }
+
+  .codeBlock {
+    font-size: 0.8rem;
   }
 }

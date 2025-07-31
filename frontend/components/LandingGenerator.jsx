@@ -2,12 +2,14 @@
 import { useState } from "react"; // Hook de React para manejar estado local del componente
 import axios from "axios"; // Biblioteca para realizar peticiones HTTP al backend
 import styles from "../styles/LandingGenerator.module.css"; // Estilos CSS modulares específicos del componente
+import LandingPreview from "./LandingPreview"; // Componente para mostrar vista previa
 
 const LandingGenerator = () => {
   // Estados del componente usando hooks de React
   const [prompt, setPrompt] = useState(""); // Estado para almacenar el texto del prompt del usuario
   const [generatedHTML, setGeneratedHTML] = useState(""); // Estado para almacenar el HTML generado por la IA
   const [isLoading, setIsLoading] = useState(false); // Estado para controlar el indicador de carga
+  const [viewMode, setViewMode] = useState("preview"); // Estado para controlar qué vista mostrar: 'preview' o 'code'
 
   // Función asíncrona que maneja la generación de la landing page
   const handleGenerate = async () => {
@@ -18,7 +20,7 @@ const LandingGenerator = () => {
 
       // Realizar petición POST al backend con el prompt del usuario
       const response = await axios.post(
-        "http://localhost:8000/generate-landing", // URL del endpoint del backend
+        "http://localhost:8001/api/generate-landing", // URL del endpoint del backend
         {
           prompt: prompt, // Datos a enviar: el prompt del usuario
         }
@@ -77,25 +79,43 @@ const LandingGenerator = () => {
         {/* Sección de resultados - solo se muestra si hay HTML generado */}
         {generatedHTML && (
           <div className={styles.resultSection}>
-            <h2 className={styles.resultTitle}>Landing Page Generada:</h2>
+            <div className={styles.resultHeader}>
+              <h2 className={styles.resultTitle}>Landing Page Generada:</h2>
 
-            {/* Contenedor para la vista previa en iframe */}
-            <div className={styles.previewContainer}>
-              <iframe
-                srcDoc={generatedHTML} // Contenido HTML a mostrar en el iframe
-                className={styles.preview} // Estilos CSS del iframe
-                title="Vista previa de la landing page" // Título para accesibilidad
-              />
+              {/* Botones para cambiar entre vista previa y código */}
+              <div className={styles.viewToggle}>
+                <button
+                  className={`${styles.toggleButton} ${
+                    viewMode === "preview" ? styles.active : ""
+                  }`}
+                  onClick={() => setViewMode("preview")}
+                >
+                  👁️ Ver Vista Previa
+                </button>
+                <button
+                  className={`${styles.toggleButton} ${
+                    viewMode === "code" ? styles.active : ""
+                  }`}
+                  onClick={() => setViewMode("code")}
+                >
+                  💻 Ver Código
+                </button>
+              </div>
             </div>
 
-            {/* Sección para mostrar el código HTML generado */}
-            <div className={styles.codeSection}>
-              <h3 className={styles.codeTitle}>Código HTML:</h3>
-              {/* Bloque de código preformateado */}
-              <pre className={styles.codeBlock}>
-                <code>{generatedHTML}</code> {/* Mostrar el HTML como texto */}
-              </pre>
-            </div>
+            {/* Mostrar vista previa o código según el modo seleccionado */}
+            {viewMode === "preview" ? (
+              <LandingPreview htmlContent={generatedHTML} isVisible={true} />
+            ) : (
+              <div className={styles.codeSection}>
+                <h3 className={styles.codeTitle}>Código HTML:</h3>
+                {/* Bloque de código preformateado */}
+                <pre className={styles.codeBlock}>
+                  <code>{generatedHTML}</code>{" "}
+                  {/* Mostrar el HTML como texto */}
+                </pre>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -7,13 +7,13 @@ iterativa de landing pages usando inteligencia artificial.
 
 from fastapi import APIRouter
 from typing import List
-from ..schemas.modification_schema import ModificationRequest, ModificationResponse, ConversationEntry
-from ..services.modify_code import (
+from schemas.modification_schema import ModificationRequest, ModificationResponse, ConversationEntry
+from services.modify_code import (
     modificar_landing_conversacional, 
     validate_modification_request,
     get_modification_examples
 )
-from ..utils.error_handlers import handle_generic_error, create_success_response
+from utils.error_handlers import handle_generic_error, create_success_response
 
 
 # Crear router para las rutas de modificación

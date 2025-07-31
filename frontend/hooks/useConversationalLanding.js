@@ -39,13 +39,13 @@ export const useConversationalLanding = () => {
       console.log("Generando landing page inicial con prompt:", initialPrompt);
 
       const response = await axios.post(
-        "http://localhost:8000/generate-landing",
+        "http://localhost:8001/api/generate-landing",
         {
           prompt: initialPrompt,
         }
       );
 
-      const generatedHTML = response.data.html;
+      const generatedHTML = response.data.data.html;
       setCurrentHTML(generatedHTML);
 
       // Inicializar el historial de conversación
@@ -99,7 +99,7 @@ export const useConversationalLanding = () => {
         );
 
         const response = await axios.post(
-          "http://localhost:8000/modify-landing",
+          "http://localhost:8001/api/modify-landing",
           {
             currentHTML: currentHTML,
             modificationRequest: modificationRequest,
@@ -107,7 +107,7 @@ export const useConversationalLanding = () => {
           }
         );
 
-        const modifiedHTML = response.data.html;
+        const modifiedHTML = response.data.data.html;
         setCurrentHTML(modifiedHTML);
 
         // Agregar la modificación al historial

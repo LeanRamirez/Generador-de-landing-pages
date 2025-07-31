@@ -6,9 +6,9 @@ basado en instrucciones conversacionales del usuario.
 """
 
 from typing import List
-from ..schemas.modification_schema import ConversationEntry
-from ..utils.openai_client import create_chat_completion, build_system_message, build_user_message
-from ..utils.error_handlers import handle_openai_error, validate_required_fields
+from schemas.modification_schema import ConversationEntry
+from utils.openai_client import create_chat_completion, build_system_message, build_user_message
+from utils.error_handlers import handle_openai_error, validate_required_fields
 
 
 def modificar_landing_conversacional(
@@ -210,7 +210,7 @@ def validate_modification_request(
     """
     # Validar longitud mínima del código
     if len(codigo_actual.strip()) < 100:
-        from ..utils.error_handlers import handle_validation_error
+        from utils.error_handlers import handle_validation_error
         raise handle_validation_error(
             "codigo_actual", 
             "El código actual debe tener al menos 100 caracteres"
@@ -218,7 +218,7 @@ def validate_modification_request(
     
     # Validar que sea HTML válido básico
     if not ("<html" in codigo_actual.lower() or "<!doctype" in codigo_actual.lower()):
-        from ..utils.error_handlers import handle_validation_error
+        from utils.error_handlers import handle_validation_error
         raise handle_validation_error(
             "codigo_actual", 
             "El código debe ser HTML válido"
@@ -226,14 +226,14 @@ def validate_modification_request(
     
     # Validar longitud de la instrucción
     if len(instruccion.strip()) < 5:
-        from ..utils.error_handlers import handle_validation_error
+        from utils.error_handlers import handle_validation_error
         raise handle_validation_error(
             "instruccion", 
             "La instrucción debe tener al menos 5 caracteres"
         )
     
     if len(instruccion.strip()) > 500:
-        from ..utils.error_handlers import handle_validation_error
+        from utils.error_handlers import handle_validation_error
         raise handle_validation_error(
             "instruccion", 
             "La instrucción debe tener menos de 500 caracteres"
